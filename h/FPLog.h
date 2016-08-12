@@ -9,10 +9,10 @@
 #include "time.h"
 
 // StackwalkerAPI and SymtabAPI (needed for error traces)
-#include "stackwalk/h/walker.h"
-#include "stackwalk/h/framestepper.h"
-#include "stackwalk/h/steppergroup.h"
-#include "stackwalk/h/frame.h"
+#include "walker.h"
+#include "framestepper.h"
+#include "steppergroup.h"
+#include "frame.h"
 #include "Symtab.h"
 #include "Type.h"
 #include "Function.h"
