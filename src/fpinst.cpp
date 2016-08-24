@@ -77,6 +77,8 @@ bool disableSampling = false;   // disable logarithmic cancellation sampling
 bool instrFrames = false;       // add instrumentation stack frames
 bool fortranMode = false;       // switch up instrumentation for FORTRAN programs
 bool multicoreMode = false;     // use the LOCK prefix for INC instructions
+bool disableLivenessAnalysis = false; // Ensure all general purpose registers
+                                      // are saved (useful when using -O2)
 
 // function/instruction indices and counts
 size_t midx = 0, fidx = 0, bbidx = 0, iidx = 0;
@@ -1687,6 +1689,10 @@ void instrumentApplication()
         bpatch->setSaveFPR(false);
     }
 
+    if (disableLivenessAnalysis) {
+      bpatch->setLivenessAnalysis(false);
+    }
+
     mainApp->beginInsertionSet();
 
 	// grab references to analysis functions
@@ -2053,6 +2059,7 @@ void usage()
     printf("\n");
     printf(" Options:\n");
     printf("\n");
+    printf("  -a                   save all GP registers during instrumentation (no liveness analysis)\n");
     printf("  -c <filename>        use the specified base configuration file (default is \"base.cfg\")\n");
     printf("  -C \"<key>=<value>\"   add the given additional setting to the configuration\n");
     //printf("  -d                   detect cancellations (only activated with shadow/pointer value analyses)\n");
@@ -2129,6 +2136,8 @@ bool parseCommandLine(unsigned argc, char *argv[])
 		if (strcmp(argv[i], "-h")==0) {
 			usage();
 			exit(EXIT_SUCCESS);
+		} else if (strcmp(argv[i], "-a")==0) {
+			disableLivenessAnalysis = true;
 		} else if (strcmp(argv[i], "-p")==0) {
 			process = true;
 		} else if (strcmp(argv[i], "-l")==0) {
