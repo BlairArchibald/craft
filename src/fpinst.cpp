@@ -7,6 +7,7 @@
  */
 
 #include "fpinst.h"
+#include <fstream>
 //#include "fpinst_quad.h"
 
 #define BUFFER_STRING_LEN 1024
@@ -51,6 +52,7 @@ char *logFile = NULL;
 char *logTag = NULL;
 char *child_argv[45];
 char *child_envp[10];
+char* sharedLibFile = NULL;
 
 // instrumentation function options
 char mainFuncName[] = "main";
@@ -484,6 +486,24 @@ bool overwriteBlock(PatchBlock *block, unsigned char val) {
         if (!success) return false;
     }
     return true;
+}
+
+// Attempt to load libraries specified in "sharedLibFile" into the applications
+void loadSharedLibs(BPatch_binaryEdit* app) {
+  if (sharedLibFile != NULL) {
+    std::ifstream file(sharedLibFile);
+    if (file) {
+      std::string libName;
+      while (std::getline(file, libName)) {
+        BPatch_object* err = app->loadLibrary(libName.c_str());
+        if (err == NULL) {
+          std::cout << "WARNING: Unable to open shared library: " << libName << std::endl;
+        }
+      }
+    } else {
+      std::cout << "WARNING: Unable to open sharedLibFile: "  << sharedLibFile << std::endl;
+    }
+  }
 }
 
 // }}}
@@ -2085,6 +2105,7 @@ void usage()
     printf("  -S                   disable logarithmic event sampling (only activated with cancellation detection)\n");
     printf("  -t                   optimize analysis with faster routines for some instructions\n");
     printf("  -T                   specify a tag that is appended to log file names\n");
+    printf("  -u <filename>        specify a file to read shared libraries we want to instrument from\n");
     printf("  -w                   enable stack walks/traces (only activated with cancellation detection)\n");
     printf("  -y                   insert symbols for instrumentation stack frames (high disk overhead!)\n");
     printf("\n");
@@ -2194,7 +2215,9 @@ bool parseCommandLine(unsigned argc, char *argv[])
             restrictFuncs = 'F';
 		} else if (strcmp(argv[i], "-o")==0 && i < argc-1) {
             outFile = argv[++i];
-        } else if (argv[i][0] == '-') {
+		} else if (strcmp(argv[i], "-u")==0 && i < argc-1) {
+            sharedLibFile = argv[++i];
+    } else if (argv[i][0] == '-') {
             printf("Unrecognized option: %s\n", argv[i]);
             usage();
             exit(EXIT_FAILURE);
@@ -2276,7 +2299,7 @@ int main(int argc, char *argv[])
 		// open binary and dependencies
         // (even if we're not instrumenting shared libraries, we may need to
         // replace libm/libc functions)
-		app = bpatch->openBinary(binary, true);
+		app = bpatch->openBinary(binary, false);
 	}
 	if (app == NULL) {
 		printf("ERROR: Unable to start/open application.\n");
@@ -2294,6 +2317,10 @@ int main(int argc, char *argv[])
 		printf("ERROR: Unable to open libfpanalysis.so.\n");
         exit(EXIT_FAILURE);
     }
+
+    // Load requested shared libs - avoids a potential infinite loop when
+    // calling openBinary with getDependencies
+  loadSharedLibs((BPatch_binaryEdit*) app);
 
     // DEBUG: list modules in library
     /*
