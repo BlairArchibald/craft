@@ -229,17 +229,17 @@ bool FPSVSingle::isPositive()
 
 bool FPSVSingle::isNormal()
 {
-  return isd::isnormal(value);
+  return isnormal(value);
 }
 
 bool FPSVSingle::isNaN()
 {
-  return std::isnanf(value);
+  return isnanf(value);
 }
 
 bool FPSVSingle::isInf()
 {
-  return std::isinff(value);
+  return isinff(value);
 }
 
 // get the current shadow value in the operand type most appropriate 

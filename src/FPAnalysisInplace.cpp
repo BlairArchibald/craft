@@ -1941,15 +1941,15 @@ double FPAnalysisInplace::handleUnaryReplacedFunc(FPOperationType type, double i
         HANDLE_UNARY_CASE_DBL(OP_ATANH, atanhf, atanh);
 
         case OP_CLASS:
-            if (singlePrec) { return fpclassify(fval); } else { return fpclassify(input); } break;
+          if (singlePrec) { return fpclassify(fval); } else { return fpclassify(input); } break;
         case OP_ISFIN:
-            if (singlePrec) { return finitef(fval); }    else { return finite(input); } break;
+          if (singlePrec) { return finitef(fval); }    else { return finite(input); } break;
         case OP_ISNORM:
-            if (singlePrec) { return isnormal(fval); }   else { return isnormal(input); } break;
+          if (singlePrec) { return std::isnormal(fval); }   else { return std::isnormal(input); } break;
         case OP_ISNAN:
-            if (singlePrec) { return isnanf(fval); }     else { return isnan(input); } break;
+          if (singlePrec) { return isnanf(fval); }     else { return std::isnan(input); } break;
         case OP_ISINF:
-            if (singlePrec) { return isinff(fval); }     else { return isinf(input); } break;
+          if (singlePrec) { return isinff(fval); }     else { return std::isinf(input); } break;
         case OP_NEG:
             if (singlePrec) { return -fval; }            else { return -input; } break;
 
