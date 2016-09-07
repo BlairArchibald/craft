@@ -180,7 +180,7 @@ void FPAnalysisDNan::handlePreInstruction(FPSemantics *inst)
                 input = ops[j].in[k];
                 input->refresh(context);
                 val = input->getCurrentValueD();
-                if (isnan(val)) {
+                if (std::isnan(val)) {
                     string lbl = "NaN detected: " + input->toStringV();
                     logFile->addMessage(WARNING, 999, lbl, lbl, "", inst);
                 }
