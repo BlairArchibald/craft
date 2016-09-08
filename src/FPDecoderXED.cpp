@@ -1788,6 +1788,316 @@ FPSemantics* FPDecoderXED::build(unsigned long index, void *addr, unsigned char 
       INPUT_OP(IEEE_Double,  REG_OP(2), 3);
       OUTPUT_OP(IEEE_Double, REG_OP(0), 3);
       break;
+    case XED_IFORM_VADDPD_XMMdq_XMMdq_XMMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+      break;
+    case XED_IFORM_VADDPD_XMMdq_XMMdq_MEMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+      mi++;
+      break;
+
+    case XED_IFORM_VADDPS_YMMqq_YMMqq_MEMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 4);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 4);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 4);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 5);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 5);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 5);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 6);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 6);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 6);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 7);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 7);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 7);
+      mi++;
+      break;
+    case XED_IFORM_VADDPS_YMMqq_YMMqq_YMMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 4);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 4);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 4);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 5);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 5);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 5);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 6);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 6);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 6);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 7);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 7);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 7);
+      break;
+    case XED_IFORM_VADDPS_XMMdq_XMMdq_XMMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+      break;
+    case XED_IFORM_VADDPS_XMMdq_XMMdq_MEMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+      mi++;
+      break;
+
+    // Not sure on the type, it's an add and a sub...
+    case XED_IFORM_VADDSUBPD_YMMqq_YMMqq_MEMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 2);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 3);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 3);
+      mi++;
+      break;
+    case XED_IFORM_VADDSUBPD_YMMqq_YMMqq_YMMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 2);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 3);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 3);
+      break;
+    case XED_IFORM_VADDSUBPD_XMMdq_XMMdq_XMMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+      break;
+    case XED_IFORM_VADDSUBPD_XMMdq_XMMdq_MEMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 1);
+      mi++;
+      break;
+
+    case XED_IFORM_VADDSUBPS_YMMqq_YMMqq_MEMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 4);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 4);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 4);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 5);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 5);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 5);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 6);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 6);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 6);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 7);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 7);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 7);
+      mi++;
+      break;
+    case XED_IFORM_VADDSUBPS_YMMqq_YMMqq_YMMqq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 4);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 4);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 4);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 5);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 5);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 5);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 6);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 6);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 6);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 7);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 7);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 7);
+      break;
+    case XED_IFORM_VADDSUBPS_XMMdq_XMMdq_XMMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  REG_OP(2), 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+      break;
+    case XED_IFORM_VADDSUBPS_XMMdq_XMMdq_MEMdq:
+      OP_TYPE(OP_ADD);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 0);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 1);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 1);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 2);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 2);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 2);
+
+      INPUT_OP(IEEE_Single,  REG_OP(1), 3);
+      INPUT_OP(IEEE_Single,  MEMORY_OP, 3);
+      OUTPUT_OP(IEEE_Single, REG_OP(0), 3);
+      mi++;
+      break;
+
     case XED_IFORM_VADDSD_XMMdq_XMMdq_MEMq:
       OP_TYPE(OP_ADD);
       INPUT_OP(IEEE_Double,  REG_OP(1), 0);
@@ -1817,6 +2127,28 @@ FPSemantics* FPDecoderXED::build(unsigned long index, void *addr, unsigned char 
       INPUT_OP(IEEE_Single,  REG_OP(2), 0);
       OUTPUT_OP(IEEE_Single, REG_OP(0), 0);
       break;
+
+      // Not sure about this
+    case XED_IFORM_VCMPPD_XMMdq_XMMdq_MEMq_IMMb:
+      OP_TYPE(OP_CMP);
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
+      IMM_OP;
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+
+      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+      INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
+      IMM_OP;
+      mi++;
+      break;
+    case XED_IFORM_VCMPSD_XMMdq_XMMdq_XMMq_IMMb:
+      OP_TYPE(OP_CMP);
+      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+      INPUT_OP(IEEE_Double,  REG_OP(2), 0);
+      IMM_OP;
+      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+      break;
+
     case XED_IFORM_VCMPSD_XMMdq_XMMdq_MEMq_IMMb:
       OP_TYPE(OP_CMP);
       INPUT_OP(IEEE_Double,  REG_OP(1), 0);
