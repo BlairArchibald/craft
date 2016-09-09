@@ -2129,25 +2129,18 @@ FPSemantics* FPDecoderXED::build(unsigned long index, void *addr, unsigned char 
       break;
 
       // Not sure about this
-    case XED_IFORM_VCMPPD_XMMdq_XMMdq_MEMq_IMMb:
-      OP_TYPE(OP_CMP);
-      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
-      INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
-      IMM_OP;
-      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
+    // case XED_IFORM_VCMPPD_XMMdq_XMMdq_MEMq_IMMb:
+    //   OP_TYPE(OP_CMP);
+    //   INPUT_OP(IEEE_Double,  REG_OP(1), 0);
+    //   INPUT_OP(IEEE_Double,  MEMORY_OP, 0);
+    //   IMM_OP;
+    //   OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
 
-      INPUT_OP(IEEE_Double,  REG_OP(1), 1);
-      INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
-      IMM_OP;
-      mi++;
-      break;
-    case XED_IFORM_VCMPSD_XMMdq_XMMdq_XMMq_IMMb:
-      OP_TYPE(OP_CMP);
-      INPUT_OP(IEEE_Double,  REG_OP(1), 0);
-      INPUT_OP(IEEE_Double,  REG_OP(2), 0);
-      IMM_OP;
-      OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
-      break;
+    //   INPUT_OP(IEEE_Double,  REG_OP(1), 1);
+    //   INPUT_OP(IEEE_Double,  MEMORY_OP, 1);
+    //   IMM_OP;
+    //   mi++;
+    //   break;
 
     case XED_IFORM_VCMPSD_XMMdq_XMMdq_MEMq_IMMb:
       OP_TYPE(OP_CMP);
@@ -2164,6 +2157,7 @@ FPSemantics* FPDecoderXED::build(unsigned long index, void *addr, unsigned char 
       IMM_OP;
       OUTPUT_OP(IEEE_Double, REG_OP(0), 0);
       break;
+
     case XED_IFORM_VDIVPD_YMMqq_YMMqq_MEMqq:
       OP_TYPE(OP_DIV);
 

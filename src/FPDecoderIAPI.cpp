@@ -73,7 +73,9 @@ bool FPDecoderIAPI::filter(unsigned char *bytes, size_t /*nbytes*/)
                 (*bytes) == 0xdc ||   // double ADD/MUL/COMP/SUB/DIV
                 (*bytes) == 0xdd ||   // double LD/ST
                 (*bytes) == 0xde ||   // double integer ADD/MUL/COMP/SUB/DIV
-                (*bytes) == 0xdf      // double integer LD/ST
+                (*bytes) == 0xdf ||   // double integer LD/ST
+                (*bytes) == 0xc4 ||   // AVX
+                (*bytes) == 0xc5      // AVX
        ) {
         // x87
         //fprintf(stderr, "x87 at 0x%lx\n", bytes);
@@ -121,11 +123,13 @@ FPSemantics* FPDecoderIAPI::decode(unsigned long iidx, void *addr, unsigned char
         expandInstCache(iidx >= instCacheSize*2 ? iidx+1 : instCacheSize*2);
         inst = build(iidx, addr, bytes, nbytes);
         instCacheArray[iidx] = inst;
+        iidxByAddr[addr] = iidx;
     } else {
         inst = instCacheArray[iidx];
         if (inst == NULL) {
             inst = build(iidx, addr, bytes, nbytes);
             instCacheArray[iidx] = inst;
+            iidxByAddr[addr] = iidx;
         }
     }
     return inst;
@@ -133,14 +137,14 @@ FPSemantics* FPDecoderIAPI::decode(unsigned long iidx, void *addr, unsigned char
 
 FPSemantics* FPDecoderIAPI::lookup(unsigned long iidx)
 {
-    return instCacheArray[iidx];
+    return (iidx < instCacheSize) ? instCacheArray[iidx] : NULL;
 }
 
-FPSemantics* FPDecoderIAPI::lookupByAddr(void* /*addr*/)
+FPSemantics* FPDecoderIAPI::lookupByAddr(void* addr)
 {
-    // TODO: implement
-    assert(0);
-    return NULL;
+    if (iidxByAddr.find(addr) != iidxByAddr.end()) {
+      return lookup(iidxByAddr[addr]);
+    }
 }
 
 FPSemantics* FPDecoderIAPI::build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes)
@@ -173,8 +177,10 @@ FPSemantics* FPDecoderIAPI::build(unsigned long index, void *addr, unsigned char
     
     // save disassembly
     opcode = iptr->getOperation().format();
-    printf("decoded assembly: %s [%s]\n", iptr->format().c_str(), 
-            opcode.c_str());
+    printf("OPID: %d\n", iptr->getOperation().getID());
+
+    printf("decoded assembly: %s [%s] [%p]]\n", iptr->format().c_str(), opcode.c_str(), addr);
+
     semantics->setDisassembly(iptr->format());
     semantics->setIndex(index);
     semantics->setAddress(addr);
@@ -253,7 +259,7 @@ FPSemantics* FPDecoderIAPI::build(unsigned long index, void *addr, unsigned char
         semantics->add(new FPOperation(OP_PUSH_X87));
     }
 
-    printf("%s\n\n", semantics->toString().c_str());
+    //printf("%s\n\n", semantics->toString().c_str());
     return semantics;
 }
 
@@ -853,7 +859,9 @@ void FPDecoderIAPI::addOperands(FPOperation *operation, string opcode,
         //operation->addOutputOperand(c_op);
 
     } else {
-        printf("ERROR: unsupported instruction: %s\n", opcode.c_str());
+      //printf("ERROR: unsupported instruction: %s\n", opcode.c_str());
+        c_op->setType(IEEE_Single);
+        operation->addOutputOperand(c_op);
     }
 }
 

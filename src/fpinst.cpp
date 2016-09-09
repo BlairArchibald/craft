@@ -1448,21 +1448,21 @@ bool buildInstrumentation(void* addr, FPSemantics *inst, PatchFunction *func, Pa
             logfile->addMessage(STATUS, 0, "Inserted null pre-instrumentation.", "", "", inst);
         } else if (tag == RETAG_CINST) {
             buildPreInstrumentation(inst, FPAnalysisCInst::getInstance(), preHandlers, preNeedsRegisters);
-        } else if (tag == RETAG_DCANCEL) {
-            buildPreInstrumentation(inst, FPAnalysisDCancel::getInstance(), preHandlers, preNeedsRegisters);
-        } else if (tag == RETAG_DNAN) {
-            buildPreInstrumentation(inst, FPAnalysisDNan::getInstance(), preHandlers, preNeedsRegisters);
-        } else if (tag == RETAG_TRANGE) {
-            buildReplacement(addr, inst, block, FPAnalysisTRange::getInstance());
-            replaced = true;
-        } else if (tag == RETAG_SINGLE || tag == RETAG_DOUBLE) {
-            buildReplacement(addr, inst, block, FPAnalysisInplace::getInstance());
-            replaced = true;
-        } else if (tag == RETAG_RPREC) {
-            buildReplacement(addr, inst, block, FPAnalysisRPrec::getInstance());
-            replaced = true;
-        } else if (tag == RETAG_IGNORE || tag == RETAG_NONE) {
-            // do nothing
+        // } else if (tag == RETAG_DCANCEL) {
+        //     buildPreInstrumentation(inst, FPAnalysisDCancel::getInstance(), preHandlers, preNeedsRegisters);
+        // } else if (tag == RETAG_DNAN) {
+        //     buildPreInstrumentation(inst, FPAnalysisDNan::getInstance(), preHandlers, preNeedsRegisters);
+        // } else if (tag == RETAG_TRANGE) {
+        //     buildReplacement(addr, inst, block, FPAnalysisTRange::getInstance());
+        //     replaced = true;
+        // } else if (tag == RETAG_SINGLE || tag == RETAG_DOUBLE) {
+        //     buildReplacement(addr, inst, block, FPAnalysisInplace::getInstance());
+        //     replaced = true;
+        // } else if (tag == RETAG_RPREC) {
+        //     buildReplacement(addr, inst, block, FPAnalysisRPrec::getInstance());
+        //     replaced = true;
+        // } else if (tag == RETAG_IGNORE || tag == RETAG_NONE) {
+        //     // do nothing
         }
 
     } else {
@@ -2286,8 +2286,8 @@ int main(int argc, char *argv[])
     }
 
     // initialize instruction decoder
-    mainDecoder = new FPDecoderXED();       // use Intel's decoder from Pin
-    //mainDecoder = new FPDecoderIAPI();    // use Dyninst's InstructionAPI
+    // mainDecoder = new FPDecoderXED();       // use Intel's decoder from Pin
+    mainDecoder = new FPDecoderIAPI();    // use Dyninst's InstructionAPI
 
 	// start/open application
 	BPatch_addressSpace *app;
@@ -2367,7 +2367,7 @@ int main(int argc, char *argv[])
     printf("Instrumentation complete!\n");
 
     // finalize log file
-    logfile->close();
+    //logfile->close();
 
     // resume or rewrite/execute application
     if (process) {

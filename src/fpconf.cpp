@@ -179,15 +179,15 @@ void configInstruction(void *addr, unsigned char *bytes, size_t nbytes)
     }
 
     // configure general replacement analysis
-    if (inplaceSV && mainAnalysisInplace->shouldReplace(inst)) {
-        if (outputCandidates) {
-            entry->tag = mainAnalysisInplace->getDefaultRETag(inst);
-        } else if (mainAnalysisInplace->getSVType(inst) == SVT_IEEE_Single) {
-            entry->tag = RETAG_SINGLE;
-        } else /* if (mainAnalysisInplace->getSVType(inst) == SVT_IEEE_Double) */ {
-            entry->tag = RETAG_DOUBLE;
-        }
-    }
+    // if (inplaceSV && mainAnalysisInplace->shouldReplace(inst)) {
+    //     if (outputCandidates) {
+    //         entry->tag = mainAnalysisInplace->getDefaultRETag(inst);
+    //     } else if (mainAnalysisInplace->getSVType(inst) == SVT_IEEE_Single) {
+    //         entry->tag = RETAG_SINGLE;
+    //     } else /* if (mainAnalysisInplace->getSVType(inst) == SVT_IEEE_Double) */ {
+    //         entry->tag = RETAG_DOUBLE;
+    //     }
+    // }
 
     // configure reduced precision analysis
     if (reducePrec && mainAnalysis->shouldReplace(inst)) {
@@ -497,26 +497,27 @@ void initialize_analysis()
     } else if (countInst) {
         mainConfig->setValue("c_inst", "yes");
         mainAnalysis = FPAnalysisCInst::getInstance();
-    } else if (detectCancel) {
-        mainConfig->setValue("d_cancel", "yes");
-        mainAnalysis = FPAnalysisDCancel::getInstance();
-    } else if (detectNaN) {
-        mainConfig->setValue("d_nan", "yes");
-        mainAnalysis = FPAnalysisDNan::getInstance();
-    } else if (trackRange) {
-        mainConfig->setValue("t_range", "yes");
-        mainAnalysis = FPAnalysisTRange::getInstance();
-    } else if (inplaceSV) {
-        mainConfig->setValue("sv_inp", "yes");
-        mainConfig->setValue("sv_inp_type", inplaceSVType);
-        mainAnalysis = FPAnalysisInplace::getInstance();
-        mainAnalysisInplace = FPAnalysisInplace::getInstance();
-    } else if (reducePrec) {
-        stringstream ss(""); ss << reducePrecDefaultPrec;
-        mainConfig->setValue("r_prec", "yes");
-        mainConfig->setValue("r_prec_default_precision", ss.str());
-        mainAnalysis = FPAnalysisRPrec::getInstance();
     }
+    // } else if (detectCancel) {
+    //     mainConfig->setValue("d_cancel", "yes");
+    //     mainAnalysis = FPAnalysisDCancel::getInstance();
+    // } else if (detectNaN) {
+    //     mainConfig->setValue("d_nan", "yes");
+    //     mainAnalysis = FPAnalysisDNan::getInstance();
+    // } else if (trackRange) {
+    //     mainConfig->setValue("t_range", "yes");
+    //     mainAnalysis = FPAnalysisTRange::getInstance();
+    // } else if (inplaceSV) {
+    //     mainConfig->setValue("sv_inp", "yes");
+    //     mainConfig->setValue("sv_inp_type", inplaceSVType);
+    //     mainAnalysis = FPAnalysisInplace::getInstance();
+    //     mainAnalysisInplace = FPAnalysisInplace::getInstance();
+    // } else if (reducePrec) {
+    //     stringstream ss(""); ss << reducePrecDefaultPrec;
+    //     mainConfig->setValue("r_prec", "yes");
+    //     mainConfig->setValue("r_prec_default_precision", ss.str());
+    //     mainAnalysis = FPAnalysisRPrec::getInstance();
+    // }
     if (mainAnalysis) {
         mainAnalysis->configure(mainConfig, mainDecoder, NULL, NULL);
     } else {

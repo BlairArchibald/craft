@@ -40,7 +40,7 @@ struct FPAnalysisInfo {
 // total number of valid analyses
 // NEWMODE: increment this number
 //
-const size_t TOTAL_ANALYSIS_COUNT = 8;
+const size_t TOTAL_ANALYSIS_COUNT = 1;
 
 
 /**

@@ -63,8 +63,11 @@ class FPDecoderIAPI : public FPDecoder, public Visitor {
 
         void expandInstCache(size_t newSize);
 
+        std::map<void *,unsigned long> iidxByAddr;
+
         FPSemantics** instCacheArray;
         size_t instCacheSize;
+
 
 };
 

@@ -23,54 +23,54 @@ FPAnalysisInfo allAnalysisInfo[] = {
         ""
     },
 
-    {   FPAnalysisExample::getInstance(),
-        "--dprint", NULL,
-        "--dprint",
-        "debug printing (example analysis",
-        ""
-    },
+    // {   FPAnalysisExample::getInstance(),
+    //     "--dprint", NULL,
+    //     "--dprint",
+    //     "debug printing (example analysis",
+    //     ""
+    // },
     
-    {   FPAnalysisDCancel::getInstance(),
-        "--dcancel", NULL,
-        "--dcancel",
-        "detect cancellation events",
-        ""
-    },
+    // {   FPAnalysisDCancel::getInstance(),
+    //     "--dcancel", NULL,
+    //     "--dcancel",
+    //     "detect cancellation events",
+    //     ""
+    // },
 
-    {   FPAnalysisDNan::getInstance(),
-        "--dnan", NULL,
-        "--dnan",
-        "detect NaN values",
-        ""
-    },
+    // {   FPAnalysisDNan::getInstance(),
+    //     "--dnan", NULL,
+    //     "--dnan",
+    //     "detect NaN values",
+    //     ""
+    // },
 
-    {   FPAnalysisTRange::getInstance(),
-        "--trange", NULL,
-        "--trange",
-        "track operand value ranges",
-        ""
-    },
+    // {   FPAnalysisTRange::getInstance(),
+    //     "--trange", NULL,
+    //     "--trange",
+    //     "track operand value ranges",
+    //     ""
+    // },
 
-    {   FPAnalysisPointer::getInstance(),
-        "--svptr", "sv_ptr_type",
-        "--svptr <policy>",
-        "pointer-based replacement analysis",
-        "valid policies: \"single\", \"double\""
-    },
+    // {   FPAnalysisPointer::getInstance(),
+    //     "--svptr", "sv_ptr_type",
+    //     "--svptr <policy>",
+    //     "pointer-based replacement analysis",
+    //     "valid policies: \"single\", \"double\""
+    // },
 
-    {   FPAnalysisInplace::getInstance(),
-        "--svinp", "sv_inp_type",
-        "--svinp <policy>",
-        "in-place replacement analysis",
-        "valid policies: \"single\", \"double\", \"mem_single\", \"mem_double\", \"config\""
-    },
+    // {   FPAnalysisInplace::getInstance(),
+    //     "--svinp", "sv_inp_type",
+    //     "--svinp <policy>",
+    //     "in-place replacement analysis",
+    //     "valid policies: \"single\", \"double\", \"mem_single\", \"mem_double\", \"config\""
+    // },
 
-    {   FPAnalysisRPrec::getInstance(),
-        "--rprec", "r_prec_default_precision",
-        "--rprec <bits>",
-        "reduced-precision analysis",
-        ""
-    }
+    // {   FPAnalysisRPrec::getInstance(),
+    //     "--rprec", "r_prec_default_precision",
+    //     "--rprec <bits>",
+    //     "reduced-precision analysis",
+    //     ""
+    // }
 
     // NEWMODE: add info for new analyses here
     //
