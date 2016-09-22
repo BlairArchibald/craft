@@ -151,6 +151,7 @@ namespace FPInst {
     //semantics->setBytes(bytes, nbytes);
     semantics->setFunctionName(funcName);
 
+    /*
     // extract type from opcode
     operation->setType(getOpType(opcode));
 
@@ -225,6 +226,8 @@ namespace FPInst {
     }
 
     //printf("%s\n\n", semantics->toString().c_str());
+  */
+    semantics->add(operation);
     return semantics;
   }
 
