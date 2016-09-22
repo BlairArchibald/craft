@@ -38,6 +38,9 @@ class FPSemantics {
         void getBytes(unsigned char *dest);
         void setBytes(unsigned char *bytes, size_t nbytes);
 
+        std::string getFunctionName();
+        void setFunctionName(std::string s);
+
         /**
          * Returns true if none of the operations are of type OP_INVALID.
          */
@@ -98,6 +101,8 @@ class FPSemantics {
         void *address;
         unsigned char *bytes;
         size_t nbytes;
+
+        std::string functionName;
 
         FPOperation* ops[4]; // may need to increase size at some point
 

@@ -32,7 +32,7 @@ class FPDecoderXED : public FPDecoder {
         ~FPDecoderXED();
 
         bool filter(unsigned char *bytes, size_t nbytes);
-        FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes);
+        FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes, std::string);
         FPSemantics* lookup(unsigned long iidx);
         FPSemantics* lookupByAddr(void* addr);
 

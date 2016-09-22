@@ -26,7 +26,7 @@ namespace FPInst {
     ~FPDecoderIAPI();
 
     bool filter(unsigned char *bytes, size_t nbytes);
-    FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes);
+    FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes, std::string funcName);
     FPSemantics* lookup(unsigned long iidx);
     FPSemantics* lookupByAddr(void* addr);
 
@@ -53,7 +53,7 @@ namespace FPInst {
     std::map<void*, FPSemantics*> instByAddr;
     std::map<int, FPSemantics*> instById;
 
-    FPSemantics* build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes);
+    FPSemantics* build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes, std::string funcName);
 
     FPOperationType getOpType(string opcode);
     size_t getSize(signed int val);

@@ -405,7 +405,7 @@ BPatch_constExpr* saveStringToBinary(const char *str, size_t nbytes)
      *}
      *printf("\"");
      */
-    assert(nbytes < 2048);
+    assert(nbytes < 4096);
     BPatch_variableExpr *strExpr = mainApp->malloc(nbytes);
     strExpr->writeValue(str, nbytes, false);
     //printf(" @ %p", strExpr->getBaseAddr());
@@ -1526,7 +1526,7 @@ bool buildInstrumentation(void* addr, FPSemantics *inst, PatchFunction *func, Pa
 
 void instrumentInstruction(void* addr, unsigned char *bytes, size_t nbytes,
         PatchFunction *func, PatchBlock *block,
-        BPatch_Vector<BPatch_snippet*> &initSnippets)
+        BPatch_Vector<BPatch_snippet*> &initSnippets, std::string funcName)
 {
     // debug printing
     /*
@@ -1576,6 +1576,10 @@ void instrumentInstruction(void* addr, unsigned char *bytes, size_t nbytes,
             regArgs->push_back(new BPatch_constExpr(addr));
             regArgs->push_back(bytesExpr);
             regArgs->push_back(new BPatch_constExpr(nbytes));
+
+            BPatch_constExpr funcNameExpr(funcName.c_str());
+            regArgs->push_back(& funcNameExpr);
+
             BPatch_funcCallExpr *regInst = new BPatch_funcCallExpr(*regFunc, *regArgs);
             initSnippets.push_back(regInst);
 
@@ -1615,7 +1619,7 @@ void instrumentBasicBlock(BPatch_function * function, BPatch_basicBlock *block,
         if (mainDecoder->filter(bytes, nbytes)) {
             instrumentInstruction(addr, bytes, nbytes,
                     PatchAPI::convert(function), PatchAPI::convert(block),
-                    initSnippets);
+                    initSnippets, function->getName());
         }
     }
 }
@@ -1913,12 +1917,12 @@ void instrumentApplication()
  * the instruction IDs to be sequential to match config files created by fpconf.
  */
 
-void decodeInstruction(void* addr, unsigned char *bytes, size_t nbytes)
+void decodeInstruction(void* addr, unsigned char *bytes, size_t nbytes, std::string funcName)
 {
     iidx++;
     total_fp_instructions++;
     
-    FPSemantics *inst = mainDecoder->decode(iidx, addr, bytes, nbytes);
+    FPSemantics *inst = mainDecoder->decode(iidx, addr, bytes, nbytes, funcName);
 
     if (listFuncs) {
         printf("      POINT %lu: bbidx=%lu fidx=%lu \"%s\" [", 
@@ -1929,7 +1933,7 @@ void decodeInstruction(void* addr, unsigned char *bytes, size_t nbytes)
     }
 }
 
-void decodeBasicBlock(BPatch_basicBlock *block)
+void decodeBasicBlock(BPatch_basicBlock *block, std::string funcName)
 {
     static size_t MAX_RAW_INSN_SIZE = 16;
 
@@ -1963,7 +1967,7 @@ void decodeBasicBlock(BPatch_basicBlock *block)
 
         // apply filter
         if (mainDecoder->filter(bytes, nbytes)) {
-            decodeInstruction(addr, bytes, nbytes);
+          decodeInstruction(addr, bytes, nbytes, funcName);
         }
     }
 }
@@ -1988,7 +1992,7 @@ void decodeFunction(BPatch_function *function, const char *name)
     BPatch_flowGraph *cfg = function->getCFG();
     cfg->getAllBasicBlocks(blocks);
     for (b = blocks.begin(); b != blocks.end(); b++) {
-        decodeBasicBlock(*b);
+      decodeBasicBlock(*b, function->getName());
     }
 }
 

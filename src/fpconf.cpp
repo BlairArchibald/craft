@@ -131,7 +131,7 @@ void configInstruction(void *addr, unsigned char *bytes, size_t nbytes)
     total_fp_instructions++;
 
     // decode instruction
-    FPSemantics *inst = mainDecoder->decode(iidx, addr, bytes, nbytes);
+    FPSemantics *inst = mainDecoder->decode(iidx, addr, bytes, nbytes, std::string(""));
 
     // build config entry
     FPReplaceEntry *entry = new FPReplaceEntry(RETYPE_INSTRUCTION, iidx);

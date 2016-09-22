@@ -193,7 +193,7 @@ bool FPDecoderXED::filter(unsigned char *bytes, size_t nbytes)
     return add;
 }
 
-FPSemantics* FPDecoderXED::decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes)
+  FPSemantics* FPDecoderXED::decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes, std::string funcName)
 {
     FPSemantics *inst;
     if (instCacheSize <= iidx) {

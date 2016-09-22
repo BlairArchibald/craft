@@ -83,11 +83,11 @@ namespace FPInst {
     return add;
   }
 
-  FPSemantics* FPDecoderIAPI::decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes)
+  FPSemantics* FPDecoderIAPI::decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes, std::string funcName)
   {
     FPSemantics *inst = lookup(iidx);
     if (!inst) {
-      inst = build(iidx, addr, bytes, nbytes);
+      inst = build(iidx, addr, bytes, nbytes, funcName);
       instById[iidx]  = inst;
       instByAddr[addr] = inst;
     }
@@ -112,7 +112,7 @@ namespace FPInst {
     return NULL;
   }
 
-  FPSemantics* FPDecoderIAPI::build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes)
+  FPSemantics* FPDecoderIAPI::build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes, std::string funcName)
   {
     // misc data structures
     FPSemantics *semantics;
@@ -150,6 +150,7 @@ namespace FPInst {
     semantics->setIndex(index);
     semantics->setAddress(addr);
     semantics->setBytes(bytes, nbytes);
+    semantics->setFunctionName(funcName);
 
     // extract type from opcode
     operation->setType(getOpType(opcode));

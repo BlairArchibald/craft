@@ -261,8 +261,8 @@ void _INST_init_analysis ()
     }
 
     // the XED decoder is currently more accurate
-    mainDecoder = new FPDecoderXED();
-    //mainDecoder = new FPDecoderIAPI();
+    //mainDecoder = new FPDecoderXED();
+    mainDecoder = new FPDecoderIAPI();
     status << "XED decoder initialized." << endl;
     
     // initialize various analyses
@@ -304,13 +304,13 @@ void _INST_enable_analysis ()
     _INST_status = _INST_INACTIVE;
 }
 
-void _INST_register_inst (long iidx, void* addr, char* bytes, long nbytes)
+void _INST_register_inst (long iidx, void* addr, char* bytes, long nbytes, char* functionName)
 {
     //printf("registering instruction #%ld:  %p @ %p  (%ld bytes)  ",
             //iidx, addr, bytes, nbytes);
     //FPDecoderXED::printInstBytes(stdout, (unsigned char*)bytes, nbytes);
     _INST_status = _INST_ACTIVE;
-    FPSemantics *inst = mainDecoder->decode(iidx, addr, (unsigned char*)bytes, nbytes);
+    FPSemantics *inst = mainDecoder->decode(iidx, addr, (unsigned char*)bytes, nbytes, std::string(functionName));
     //printf("  %s\n", inst->getDisassembly().c_str());
     size_t i;
     for (i=0; i<analysisCount; i++) {

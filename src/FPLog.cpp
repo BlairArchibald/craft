@@ -448,35 +448,16 @@ void FPLog::writeTraces()
 
 void FPLog::writeInstructions()
 {
-    map<FPSemantics *, unsigned>::iterator i;
-    for (i = instructions.begin(); i != instructions.end(); i++) {
-        logfile << "<instruction id=\"" << (i->second) << "\"";
-        logfile << " address=\"" << hex << i->first->getAddress() << dec << "\"";
-        if (debug_symtab) {
-            stwalk_lines.clear();
-            debug_symtab->getSourceLines(stwalk_lines, (Offset)i->first->getAddress());
-            Function *func;
-            debug_symtab->getContainingFunction((Offset)i->first->getAddress(), func);
-            if (func) {
-                Aggregate::name_iter it = func->pretty_names_begin();
-                if (it != func->pretty_names_end()) {
-                    logfile << " function=\"" << sanitize(*it) << "\"";
-                }
-            }
-            if (stwalk_lines.size() > 0) {
-                logfile << " file=\"" << stwalk_lines[0]->getFile() << "\" lineno=\"" << stwalk_lines[0]->getLine() << "\"";
-                //Module *mod;
-                //debug_symtab->findModuleByOffset(mod, (Offset)i->first->getAddress());
-                //if (mod) {
-                    //logfile << " module=\"" << mod->fileName() << "\"" << endl;
-                //}
-            }
-        }
-        logfile << ">" << endl;
-        logfile << "<disassembly>" << endl << (i->first->getDisassembly()) << endl << "</disassembly>" << endl;
-        logfile << "<text>" << endl << (i->first->toString()) << endl << "</text>" << endl;
-        logfile << "</instruction>" << endl;
+    for (auto i = instructions.begin(); i != instructions.end(); i++) {
+      logfile << "<instruction id=\"" << (i->second) << "\"";
+      logfile << " address=\"" << hex << i->first->getAddress() << dec << "\"";
+      logfile << " func=\"" << i->first->getFunctionName() << "\">" << endl;
+      logfile << "<disassembly>" << endl << (i->first->getDisassembly()) << endl << "</disassembly>" << endl;
+      // TODO: Doesn't work with IAPI decoder
+      //logfile << "<text>" << endl << (i->first->toString()) << endl << "</text>" << endl;
+      logfile << "</instruction>" << endl;
     }
+    logfile << "Test" << std::endl;
 }
 
 string FPLog::formatLargeCount(size_t val)
@@ -511,7 +492,8 @@ string FPLog::formatLargeCount(size_t val)
 void FPLog::close()
 {
     if (!fileOpen) return;
-    writeTraces();
+    //writeTraces();
+    std::cout << "Writing instructions" << std::endl;
     writeInstructions();
     logfile << "</log>" << endl;
     logfile.close();
