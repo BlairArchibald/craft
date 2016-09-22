@@ -136,20 +136,19 @@ namespace FPInst {
 
     // call InstructionAPI to build its internal structures
     // and decode the byte string
-    InstructionDecoder* iapiDecoder = new InstructionDecoder(
-                                                             (const void*)bytes, nbytes, decoderArch);
-    Instruction::Ptr iptr = iapiDecoder->decode();
-    
+    InstructionDecoder iapiDecoder((const void*)bytes, nbytes, decoderArch);
+    Instruction::Ptr iptr = iapiDecoder.decode();
+
     // save disassembly
     opcode = iptr->getOperation().format();
-    printf("OPID: %d\n", iptr->getOperation().getID());
+    //printf("OPID: %d\n", iptr->getOperation().getID());
 
-    printf("decoded assembly: %s [%s] [%p]]\n", iptr->format().c_str(), opcode.c_str(), addr);
+    //printf("decoded assembly: %s [%s] [%p]]\n", iptr->format().c_str(), opcode.c_str(), addr);
 
-    semantics->setDisassembly(iptr->format());
+    //semantics->setDisassembly(iptr->format());
     semantics->setIndex(index);
     semantics->setAddress(addr);
-    semantics->setBytes(bytes, nbytes);
+    //semantics->setBytes(bytes, nbytes);
     semantics->setFunctionName(funcName);
 
     // extract type from opcode
@@ -176,11 +175,11 @@ namespace FPInst {
       expr->apply(this);
  
       // debug output
-      printf("  operand: %s size=%d %s %s\n", 
-             op.format(decoderArch, (Address)addr).c_str(), c_width,
-             //op.format().c_str(), c_width,
-             (c_read ? "[read]" : ""),
-             (c_write ? "[write]" : ""));
+      // printf("  operand: %s size=%d %s %s\n", 
+      //        op.format(decoderArch, (Address)addr).c_str(), c_width,
+      //        //op.format().c_str(), c_width,
+      //        (c_read ? "[read]" : ""),
+      //        (c_write ? "[write]" : ""));
 
       // auto-detected size from IAPI
       if (c_width == 4) {
@@ -487,25 +486,25 @@ namespace FPInst {
     unsigned i;
 
     // debug output
-    for (i=0; i<nTempOpData; i++) {
-      switch (tempOpData[i].type) {
-      case REGISTER:
-        printf("    REG: %s\n", FPContext::FPReg2Str(tempOpData[i].data.reg).c_str());
-        if (tempOpData[i].data.reg == REG_NONE) {
-          printf("      ERROR: invalid register!\n");
-        }
-        break;
-      case IMMEDIATE:
-        printf("    IMM: %ld\n", tempOpData[i].data.imm);
-        break;
-      case BINARYOP:
-        printf("    BOP: %c\n", tempOpData[i].data.bop);
-        break;
-      case DEREFERENCE:
-        printf("    DEREF\n");
-        break;
-      }
-    }
+    // for (i=0; i<nTempOpData; i++) {
+    //   switch (tempOpData[i].type) {
+    //   case REGISTER:
+    //     printf("    REG: %s\n", FPContext::FPReg2Str(tempOpData[i].data.reg).c_str());
+    //     if (tempOpData[i].data.reg == REG_NONE) {
+    //       printf("      ERROR: invalid register!\n");
+    //     }
+    //     break;
+    //   case IMMEDIATE:
+    //     printf("    IMM: %ld\n", tempOpData[i].data.imm);
+    //     break;
+    //   case BINARYOP:
+    //     printf("    BOP: %c\n", tempOpData[i].data.bop);
+    //     break;
+    //   case DEREFERENCE:
+    //     printf("    DEREF\n");
+    //     break;
+    //   }
+    // }
 
     if (nTempOpData == 1 && (tempOpData[0].type == IMMEDIATE || 
                              tempOpData[0].type == REGISTER)) {
