@@ -18,59 +18,52 @@ using namespace Dyninst::InstructionAPI;
 
 namespace FPInst {
 
-class FPDecoderIAPI : public FPDecoder, public Visitor {
+  class FPDecoderIAPI : public FPDecoder, public Visitor {
 
-    public:
+  public:
 
-        FPDecoderIAPI();
-        ~FPDecoderIAPI();
+    FPDecoderIAPI();
+    ~FPDecoderIAPI();
 
-        bool filter(unsigned char *bytes, size_t nbytes);
-        FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes);
-        FPSemantics* lookup(unsigned long iidx);
-        FPSemantics* lookupByAddr(void* addr);
+    bool filter(unsigned char *bytes, size_t nbytes);
+    FPSemantics* decode(unsigned long iidx, void *addr, unsigned char *bytes, size_t nbytes);
+    FPSemantics* lookup(unsigned long iidx);
+    FPSemantics* lookupByAddr(void* addr);
 
-        void visit(BinaryFunction *b);
-        void visit(Immediate *i);
-        void visit(RegisterAST *r);
-        void visit(Dereference *d);
+    void visit(BinaryFunction *b);
+    void visit(Immediate *i);
+    void visit(RegisterAST *r);
+    void visit(Dereference *d);
 
-    private:
+  private:
 
-        Architecture decoderArch;
-        enum OperandDataType {REGISTER, IMMEDIATE, BINARYOP, DEREFERENCE};
+    Architecture decoderArch;
+    enum OperandDataType {REGISTER, IMMEDIATE, BINARYOP, DEREFERENCE};
 
-        struct OperandData {
-            OperandDataType type;
-            union {
-                FPRegister reg;
-                long imm;
-                char bop;
-            } data;
-        } tempOpData[16];
-        size_t nTempOpData;
+    struct OperandData {
+      OperandDataType type;
+      union {
+        FPRegister reg;
+        long imm;
+        char bop;
+      } data;
+    } tempOpData[16];
+    size_t nTempOpData;
 
-        FPSemantics* build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes);
+    std::map<void*, FPSemantics*> instByAddr;
+    std::map<int, FPSemantics*> instById;
 
-        FPOperationType getOpType(string opcode);
-        size_t getSize(signed int val);
-        FPRegister getRegister(signed int val);
-        FPOperand* buildBaseOperand(FPOperandType c_type);
-        void addOperands(FPOperation *operation, string opcode, 
-                FPOperand *c_op, bool c_read, bool c_write, unsigned idx);
+    FPSemantics* build(unsigned long index, void *addr, unsigned char *bytes, size_t nbytes);
 
-        void printInstBytes(FILE *file, unsigned char *bytes, size_t nbytes);
+    FPOperationType getOpType(string opcode);
+    size_t getSize(signed int val);
+    FPRegister getRegister(signed int val);
+    FPOperand* buildBaseOperand(FPOperandType c_type);
+    void addOperands(FPOperation *operation, string opcode, 
+                     FPOperand *c_op, bool c_read, bool c_write, unsigned idx);
 
-        void expandInstCache(size_t newSize);
-
-        std::map<void *,unsigned long> iidxByAddr;
-
-        FPSemantics** instCacheArray;
-        size_t instCacheSize;
-
-
-};
-
+    void printInstBytes(FILE *file, unsigned char *bytes, size_t nbytes);
+  };
 }
 
 #endif
